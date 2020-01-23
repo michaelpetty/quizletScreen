@@ -8,16 +8,21 @@ const getDOMFromURL = async (url) => {
 const getElementsFromClassNew = (ele, className) => {
   let match = [];
   //console.log(ele.children[0].children[1].children[1].children[3].children[2].classList);
-  let list = ele.children[0].children[1].children[1].children[3].children[2].classList
+  let list = ele.classList
   for (i=0; i < list.length; i++) {
     console.log(list[i]);
     if (list[i] === className) match.push(ele);
+  }
+  let children = ele.children;
+  for (i=0; i < children.length; i++) {
+    //console.log(children[i])
+    //match.push(getElementsFromClassNew(children[i], className));
   }
   return match;
 }
 
 getDOMFromURL('https://developer.mozilla.org/en-US/docs/Web/API/Element')
 .then(res => {
-  console.log(res.getElementsByClassName('external').length);
-  console.log(getElementsFromClassNew(res, 'content-layout'));
+  document.getElementById('builtIn').innerText = res.getElementsByClassName('external').length;
+  document.getElementById('homemade').innerText = getElementsFromClassNew(res.children[0], 'external').length;
 })
