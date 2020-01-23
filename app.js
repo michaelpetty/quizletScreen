@@ -1,7 +1,9 @@
 const getDOMFromURL = async (url) => {
-    const res = await fetch(url);
+    const res = await fetch(url, {method: 'get'});
+    const body = await res.text();
+    console.log(body);
     const parser = new DOMParser();
-    return parser.parseFromString(res, 'text/html');
+    return parser.parseFromString(body, 'text/html');
 }
 
 const getElementsFromClassNew = (ele, className) => {
@@ -11,8 +13,6 @@ const getElementsFromClassNew = (ele, className) => {
 
 getDOMFromURL('https://developer.mozilla.org/en-US/docs/Web/API/Element')
 .then(res => {
-  const body = res;
-  console.log(body.getElementsByClassName('external'));
-  console.log(body.querySelectorAll('body'));
-  console.log(getElementsFromClassNew(body, 'external'));
+  console.log(res.getElementsByClassName('external'));
+  console.log(getElementsFromClassNew(res, 'external'));
 })
